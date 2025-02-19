@@ -37,7 +37,7 @@ impl completion::CompletionModel for CompletionModel {
 
         let prompt_with_history = full_history
             .into_iter()
-            .map(from_message)
+            .filter_map(|message| from_message(message).ok())
             .collect::<Vec<_>>();
 
         let mut converse_builder = self.client.aws_client.converse().model_id(self.model_id);
